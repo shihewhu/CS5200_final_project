@@ -1,0 +1,15 @@
+run "Tools->Run manage.py taks..."
+you will see a console
+do the task in the console
+
+===basic task===
+1.start a new app:
+1)console: startapp <app_name>
+2)settings.py: add <app_name> to the INSTALLED_APP
+
+2.migrations:
+1)console: makemigrations
+2)console: sqlmigrate(only do for first time)
+3)console: migrate
+
+
