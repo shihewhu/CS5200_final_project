@@ -19,11 +19,19 @@ class Post(models.Model):
     category = models.CharField(max_length=1, choices=CATEGORY_CHOICES)
     description = models.CharField(max_length=4000)
     rate = models.FloatField(null=True, blank=True, default=0.0)
+    rate_num = models.IntegerField(default=0)
     production_company = models.CharField(max_length=200)
     release_region = models.CharField(max_length=200)
     author = models.ForeignKey(User, related_name= 'author_name')
     comments = models.ManyToManyField(User, verbose_name='list of user', through='Comment')
-    ''' method'''
+    '''method'''
+    def add_rate(self, rate_added):
+        self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
+        self.rate_num += 1
+        self.save()
+    
+
+
 
 class Poster(models.Model):
     image = models.ImageField()
