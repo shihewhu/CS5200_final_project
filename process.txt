@@ -1,0 +1,12 @@
+process.txt
+11/28/2015
+1.start new app moive_posts
+2.create model followed the schema.
+3.migrate the model into the database(
+		1) python manage.py makemigrations
+		2) python manage.py sqlmigrate(only first time)
+		3) python manage.py migrate)
+4.register the superuser and models
+11/29/2015
+1.design the controller for the function of user authticates.
+ 

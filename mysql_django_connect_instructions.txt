@@ -1,0 +1,11 @@
+python+django+mysql install instructions:
+
+1.install mysql
+2.install python 2.7
+3.install pip(default)
+4.install python mysql connector
+5.install mysql client
+5.install django: pip install Django version==1.0.7
+6.install pycharm
+7.revise settings to connect mysql
+
