@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+'''
+Post schema
+'''
 class Post(models.Model):
     title = models.CharField(max_length=200, null=False)
     release_date = models.DateField(null=False)
@@ -24,14 +27,15 @@ class Post(models.Model):
     release_region = models.CharField(max_length=200)
     author = models.ForeignKey(User, related_name= 'author_name')
     comments = models.ManyToManyField(User, verbose_name='list of user', through='Comment')
+
     '''method'''
     def add_rate(self, rate_added):
         self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
         self.rate_num += 1
         self.save()
-    
 
-
+    def __str__(self):
+        return self.title
 
 class Poster(models.Model):
     image = models.ImageField()
@@ -43,6 +47,8 @@ class Comment(models.Model):
     comment_to = models.ForeignKey(Post)
     commented_by = models.ForeignKey(User)
 
+    def __str__(self):
+        return self.comment_content
 
 
 
