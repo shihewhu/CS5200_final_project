@@ -18,5 +18,6 @@ from django.contrib import admin
 from moive_posts import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^index/', views.index)
+    url(r'^index/', views.index),
+    url(r'^', views.index)
 ]

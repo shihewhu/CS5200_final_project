@@ -9,4 +9,5 @@ process.txt
 4.register the superuser and models
 11/29/2015
 1.design the controller for the function of user authticates.
+2.design the views (all pages, urls)
  
