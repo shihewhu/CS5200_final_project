@@ -13,8 +13,8 @@
                 <p>{{ post.director_name }}</p>
                 <p>{{ post.author }}</p>
                 <p>{{ post.rate }}</p>
-                {% if post.comment_set %}
-                    {% for comment in comment_set %}
+                {% if comment_set_by_post %}
+                    {% for comment in comment_set_by_post %}
                         <p>{{ comment.comment_content }}</p>
                     {% endfor %}
                 {% endif %}

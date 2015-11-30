@@ -15,4 +15,5 @@ process.txt
 11/30/2015
 1.design the controller for the function of user authticates.
 2.design the views (all pages, urls)
+3.design URIS
  

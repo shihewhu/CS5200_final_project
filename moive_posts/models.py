@@ -38,7 +38,7 @@ class Post(models.Model):
         return self.title
 
 class Poster(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to="static/")
     post = models.ForeignKey(Post)
 
 class Comment(models.Model):

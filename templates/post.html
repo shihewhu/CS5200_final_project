@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1> {{ post.title }}</h1>
+    <p> rate: {{ post.rate }}/5.0</p>
+    <p> region: {{ post.release_region }}</p>
+    <p> release date: {{ post.release_date }}</p>
+    <p> director: {{ post.director_name }}</p>
+    <p> cast: {{ post.cast }}</p>
+    <p> category: {{ post.category }}</p>
+    <p> production company: {{ post.production_company }}</p>
+    <p> authored by : {{ post.author.username }}</p>
+    <p> {{ post.description }}</p>
+    {% if posters %}
+        {% for poster in posters %}
+            {% load staticfiles %}
+            <img src="/static/{{ poster.image.url }}" style="width:304px;height:228px;">
+        {% endfor %}
+    {% endif %}
+    <p> comment: </p>
+    {% if comments %}
+        {% for comment in comments %}
+            <p> commented on : {{ comment.date_posted }}</p>
+            <p> commented by : {{ comment.commented_by }}</p>
+            <p> {{ comment.comment_content }} </p>
+        {% endfor %}
+    {% else %}
+            <p>no comment yet.</p>
+    {% endif %}
+</body>
+</html>
