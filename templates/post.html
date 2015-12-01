@@ -31,5 +31,10 @@
     {% else %}
             <p>no comment yet.</p>
     {% endif %}
+    <form action="/post/{{ post_num }}/" method="post">
+        {% csrf_token %}
+        {{ comment_form.as_table }}
+        <input type="submit" value="Submit" />
+    </form>
 </body>
 </html>

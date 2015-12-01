@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create post</title>
+</head>
+<body>
+    <form enctype="multipart/form-data" action="/create/" method="post">
+        {% csrf_token %}
+        {{ post_form.as_table }}
+        {{ poster_form.as_table }}
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>

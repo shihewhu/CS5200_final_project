@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit post</title>
+</head>
+<body>
+    <form enctype="multipart/form-data" action="/edit/{{ post_num }}/" method="post">
+        {% csrf_token %}
+        {{ post_form.as_table }}
+        {% if poster_forms %}
+            {% for poster_form in poster_forms %}
+                {{ poster_form.as_table }}
+            {% endfor %}
+        {% endif %}
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>

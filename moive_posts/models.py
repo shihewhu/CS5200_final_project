@@ -1,16 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # Create your models here.
 '''
 Post schema
 '''
+
+
 class Post(models.Model):
-    title = models.CharField(max_length=200, null=False)
-    release_date = models.DateField(null=False)
-    director_name = models.CharField(max_length=200, null=False)
-    cast = models.CharField(max_length=200, null=False)
+    title = models.CharField(max_length=200)
+    release_date = models.DateField()
+    director_name = models.CharField(max_length=200)
+    cast = models.CharField(max_length=200)
     CATEGORY_CHOICES = (
-        ('0', 'biograhpy'),
+        ('0', 'biography'),
         ('1', 'agriculture'),
         ('2', 'crime'),
         ('3', 'arts'),
@@ -25,10 +28,11 @@ class Post(models.Model):
     rate_num = models.IntegerField(default=0)
     production_company = models.CharField(max_length=200)
     release_region = models.CharField(max_length=200)
-    author = models.ForeignKey(User, related_name= 'author_name')
+    author = models.ForeignKey(User, related_name='author_name')
     comments = models.ManyToManyField(User, verbose_name='list of user', through='Comment')
 
     '''method'''
+
     def add_rate(self, rate_added):
         self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
         self.rate_num += 1
@@ -37,9 +41,11 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class Poster(models.Model):
     image = models.ImageField(upload_to="static/")
     post = models.ForeignKey(Post)
+
 
 class Comment(models.Model):
     comment_content = models.CharField(max_length=4000)
@@ -49,6 +55,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_content
-
-
-

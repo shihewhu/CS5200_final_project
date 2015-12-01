@@ -21,6 +21,9 @@ from moive_posts import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/$', views.index),
-    url(r'^post(?P<post_num>[0-9]+)/$', views.post),
+    url(r'^post/(?P<post_num>[0-9]+)/$', views.post),
+    url(r'^thanks/(?P<type_num>[0-9]+)/$', views.thanks),
+    url(r'^create/$', views.create_post),
+    url(r'^edit/(?P<edit_num>[0-9]+)/$', views.edit_post)
 ]
 

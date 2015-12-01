@@ -14,7 +14,10 @@ process.txt
 4.read the document of views
 4.read the document of form
 11/30/2015
-1.design the controller for the function of user authticates.
-2.design the views (all pages, urls)
-3.design URIS
+1. complete form for post and edit
+2. revise the post view and add comment form on it
+12/1/2015
+1.design the page logic and uris
+2.complete the register, login, logout
+3.complete the permisson add and delete
  
