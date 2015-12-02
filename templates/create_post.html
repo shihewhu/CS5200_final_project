@@ -7,8 +7,8 @@
 <body>
     <form enctype="multipart/form-data" action="/create/" method="post">
         {% csrf_token %}
-        {{ post_form.as_table }}
-        {{ poster_form.as_table }}
+        {{ post_form.as_p }}
+        {{ poster_form.as_p }}
         <input type="submit" value="Submit" />
     </form>
 </body>
