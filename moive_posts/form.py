@@ -1,7 +1,10 @@
+from django import forms
 from django.forms import ModelForm
 from models import Post
 from models import Comment
 from models import Poster
+from django.contrib.auth.forms import AuthenticationForm
+
 
 
 class PostForm(ModelForm):
@@ -14,11 +17,11 @@ class PostForm(ModelForm):
             'cast',
             'category',
             'description',
-            'rate',
             'production_company',
             'release_region'
         ]
         exclude = [
+            'rate',
             'rate_num',
             'author',
             'comments'
@@ -47,3 +50,6 @@ class PosterForm(ModelForm):
         exclude = [
             'post'
         ]
+
+class RateForm(forms.Form):
+    rate = forms.FloatField(required=True)

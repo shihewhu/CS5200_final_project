@@ -5,12 +5,15 @@
     <title>thanks</title>
 </head>
 <body>
-    {% if type == "1" %}
-        <P>thank you for posting</P>
-    {% elif type == "2" %}
-        <p>thank you for editing</p>
+    {% if type == "upload" %}
+        <P>thank you for your upload</P>
+    {% elif type == "edit" %}
+        <p>thank you for your edit</p>
+    {% elif type == "comment"%}
+        <p>thank you for your comment</p>
     {% else %}
-        <p>thank you for comment</p>
+        <p>thank you for rating</p>
     {% endif %}
+    <a href="/post/view/{{ post_num }}/" class="button">Back</a>
 </body>
 </html>

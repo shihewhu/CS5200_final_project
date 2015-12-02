@@ -18,12 +18,22 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from moive_posts import views
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
+    url(r'^homepage/$', views.homepage),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^index/$', views.index),
-    url(r'^post/(?P<post_num>[0-9]+)/$', views.post),
-    url(r'^thanks/(?P<type_num>[0-9]+)/$', views.thanks),
+    url(r'^post/(?P<func>[a-z]+)/(?P<post_num>[0-9]+)/$', views.post, name='post-func'),
+    url(r'^thanks/(?P<type>[a-z]+)/(?P<post_num>[0-9]+)/$', views.thanks),
     url(r'^create/$', views.create_post),
-    url(r'^edit/(?P<edit_num>[0-9]+)/$', views.edit_post)
+    url(r'^edit/(?P<post_num>[0-9]+)/$', views.edit_post),
+    url(r'^accounts/login/$', auth_views.login, {'template_name': 'registration/login.html',
+                                                 'redirect_field_name': '/homepage/'}),
+    url(r'^accounts/logout_then_login/$', auth_views.logout_then_login, {'login_url': '/accounts/login/'}),
+    url(r'^accounts/profile/$', views.profile),
+    url(r'^errors/(?P<type>[a-z]+)/$', views.errors),
+    url(r'^accounts/increase_privilege/$', views.increase_privilege),
+    url(r'^accounts/decrease_privilege/$', views.decrease_privilege),
+    url(r'^success/(?P<type>[a-z]+)/$', views.success)
 ]
 

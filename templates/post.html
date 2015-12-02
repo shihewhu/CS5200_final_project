@@ -7,6 +7,11 @@
 <body>
     <h1> {{ post.title }}</h1>
     <p> rate: {{ post.rate }}/5.0</p>
+    <form action="/post/rate/{{ post_num }}/" method="post">
+        {% csrf_token %}
+        {{ rate_form.as_table }}
+        <input type="submit" value="Submit"/>
+    </form>
     <p> region: {{ post.release_region }}</p>
     <p> release date: {{ post.release_date }}</p>
     <p> director: {{ post.director_name }}</p>
@@ -31,7 +36,7 @@
     {% else %}
             <p>no comment yet.</p>
     {% endif %}
-    <form action="/post/{{ post_num }}/" method="post">
+    <form action="/post/comment/{{ post_num }}/" method="post">
         {% csrf_token %}
         {{ comment_form.as_table }}
         <input type="submit" value="Submit" />

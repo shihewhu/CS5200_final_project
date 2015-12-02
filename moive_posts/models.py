@@ -1,10 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 # Create your models here.
-'''
-Post schema
-'''
 
 
 class Post(models.Model):
@@ -34,12 +32,25 @@ class Post(models.Model):
     '''method'''
 
     def add_rate(self, rate_added):
-        self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
-        self.rate_num += 1
+        if self.rate_num == 0:
+            self.rate = rate_added
+            self.rate = 1
+        else:
+            self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
+            self.rate_num += 1
         self.save()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_view_url(self):
+        return reverse('post-func', args=['view', self.id])
+
+    def get_absolute_comment_url(self):
+        return reverse('post-func', args=['comment', self.id])
+
+    def get_absolute_rate_url(self):
+        return reverse('post-func', args=['rate', self.id])
 
 
 class Poster(models.Model):

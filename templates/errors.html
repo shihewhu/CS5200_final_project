@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>oops</title>
+</head>
+<body>
+    <p>Sorry, {{ user.username }}:</p>
+    {% if type == "notauthor" %}
+        <p>you are not the author, you don't have permission</p>
+    {% endif %}
+    <a href="/homepage/" clas="button">Back</a>
+
+</body>
+</html>

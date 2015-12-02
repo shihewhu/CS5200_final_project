@@ -7,10 +7,10 @@
 <body>
     <form enctype="multipart/form-data" action="/edit/{{ post_num }}/" method="post">
         {% csrf_token %}
-        {{ post_form.as_table }}
+        {{ post_form.as_p }}
         {% if poster_forms %}
             {% for poster_form in poster_forms %}
-                {{ poster_form.as_table }}
+                {{ poster_form.as_p }}
             {% endfor %}
         {% endif %}
         <input type="submit" value="Submit" />

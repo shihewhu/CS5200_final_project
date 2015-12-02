@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.last_name }} welcome!</title>
+</head>
+<body>
+    <p>Hi! {{ user.last_name }}</p>
+    <p>{{ user.username }}</p>
+    <p>{{ user.email }}</p>
+    {% if post_list %}
+        {% for post in post_list %}
+            <a href={{ post.get_absolute_view_url }}>{{ post.title }}</a>
+        {% endfor %}
+    {% else %}
+        <p> you don't have any post</p>
+    {% endif %}
+    <a href="/accounts/logout_then_login/" class="button">logout</a>
+</body>
+</html>
