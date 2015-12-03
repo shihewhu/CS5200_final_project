@@ -34,23 +34,22 @@ def register(request):
     pass
 
 
-# TODO
 @login_required(login_url='/accounts/login')
 def profile(request):
     post_list = Post.objects.filter(author=request.user)
     # template = loader.get_template('/registration')
     return render(request, 'registration/profile.html',
-                                        {'user': request.user
-                                        ,'post_list': post_list})
+                  {'user': request.user
+                      , 'post_list': post_list})
 
 
-# TODO
+# need test
 def increase_privilege(request):
-    send_mail('request to be editor', 'username:'+request.user.username, request.user.email,
+    send_mail('request to be editor', 'username:' + request.user.username, request.user.email,
               User.objects.get(is_superuser=True).email)
     return HttpResponseRedirect('/success/editorrequest/')
 
-# TODO
+
 def decrease_privilege(request):
     group = Group.objects.get(name="editor")
     group.user_set.remove(request.user)
@@ -135,7 +134,6 @@ def create_post(request):
     return HttpResponse(template.render(context))
 
 
-
 @permission_required('moive_posts.change_post', raise_exception=True)
 @login_required(login_url='/accounts/login')
 def edit_post(request, post_num="1"):
@@ -171,6 +169,7 @@ def edit_post(request, post_num="1"):
     return HttpResponse(template.render(context))
 
 
+# TODO
 def delete_post(request, post_num="1"):
     """
     view for delete post action
@@ -180,16 +179,20 @@ def delete_post(request, post_num="1"):
     """
     post_to_delete = Post.objects.get(id=post_num)
     if post_to_delete:
-        post_to_delete.delete()
-
+        if request.method == "post":
+            post_to_delete.delete()
+            return HttpResponseRedirect("/success/delete/")
+        else:
+            pass
 
 
 def thanks(request, type, post_num):
     """
-    :param request:
-    :param type:
-    :param post_num:
-    :return:
+    view for thanks page
+    :param request: the request made by the user
+    :param type: the type for the request
+    :param post_num: the id of the post
+    :return: http response with the template of "thanks.html"
     """
     template = loader.get_template('thanks.html')
     context = RequestContext(request, {
@@ -197,6 +200,7 @@ def thanks(request, type, post_num):
         'post_num': post_num
     })
     return HttpResponse(template.render(context))
+
 
 def errors(request, type):
     """
@@ -206,7 +210,8 @@ def errors(request, type):
     :return:
     """
     return render(request, "errors.html", {'type': type,
-                                            'user': request.user})
+                                           'user': request.user})
+
 
 def success(request, type):
     """
