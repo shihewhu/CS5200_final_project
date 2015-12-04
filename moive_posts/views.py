@@ -179,11 +179,8 @@ def delete_post(request, post_num="1"):
     """
     post_to_delete = Post.objects.get(id=post_num)
     if post_to_delete:
-        if request.method == "post":
-            post_to_delete.delete()
-            return HttpResponseRedirect("/success/delete/")
-        else:
-            pass
+        post_to_delete.delete()
+        return HttpResponseRedirect("/success/delete/")
 
 
 def thanks(request, type, post_num):

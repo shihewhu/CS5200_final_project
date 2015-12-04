@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^errors/(?P<type>[a-z]+)/$', views.errors),
     url(r'^accounts/increase_privilege/$', views.increase_privilege),
     url(r'^accounts/decrease_privilege/$', views.decrease_privilege),
-    url(r'^success/(?P<type>[a-z]+)/$', views.success)
+    url(r'^success/(?P<type>[a-z]+)/$', views.success),
+    url(r'^delete/(?P<post_num>[0-9]+)/$', views.delete_post)
 ]
 

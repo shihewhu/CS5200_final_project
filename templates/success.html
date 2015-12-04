@@ -9,6 +9,8 @@
         <p>your editor request has been successfully submitted</p>
     {% elif type == "canceleditor" %}
         <p>your are a general user now</p>
+    {% elif type == "delete" %}
+        <p>delete successfully.</p>
     {% endif %}
     <a href="/accounts/profile/" clas="button">Back</a>
 </body>

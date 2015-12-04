@@ -11,6 +11,15 @@
     {% if post_list %}
         {% for post in post_list %}
             <a href={{ post.get_absolute_view_url }}>{{ post.title }}</a>
+            <button onclick="deleteComfirm()">delete</button>
+            <script>
+                function deleteConfirm() {
+                    r = confirm("delete");
+                    if (r == true) {
+                        $http.get("/delete/{{ post.id }}")
+                    }
+                }
+            </script>
         {% endfor %}
     {% else %}
         <p> you don't have any post</p>
