@@ -50,6 +50,7 @@ def increase_privilege(request):
               User.objects.get(is_superuser=True).email)
     return HttpResponseRedirect('/success/editorrequest/')
 
+
 # TODO
 def decrease_privilege(request):
     group = Group.objects.get(name="editor")
@@ -183,6 +184,15 @@ def delete_post(request, post_num="1"):
         post_to_delete.delete()
 
 
+def search_category(request):
+    cate = request.POST['cate']
+    post_list = Post.objects.filter(category=cate)
+    template = loader.get_template('search.html')
+    context = RequestContext(request, {
+        'post_list': post_list,
+    })
+    return HttpResponse(template.render(context))
+
 
 def thanks(request, type, post_num):
     """
@@ -197,6 +207,7 @@ def thanks(request, type, post_num):
         'post_num': post_num
     })
     return HttpResponse(template.render(context))
+
 
 def errors(request, type):
     """

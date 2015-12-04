@@ -6,7 +6,6 @@ from models import Poster
 from django.contrib.auth.forms import AuthenticationForm
 
 
-
 class PostForm(ModelForm):
     class Meta:
         model = Post
@@ -50,6 +49,7 @@ class PosterForm(ModelForm):
         exclude = [
             'post'
         ]
+
 
 class RateForm(forms.Form):
     rate = forms.FloatField(required=True)

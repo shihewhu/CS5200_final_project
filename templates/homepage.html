@@ -11,6 +11,23 @@
     {% else %}
         <a href="/accounts/login/" class="button">login</a>
     {% endif %}
+    <br>
+    <form action = "{% url 'search_result' %}" method = 'post'>
+        {% csrf_token %}
+        Search by Category:
+        <select name = 'cate'>
+            <option value = null>Choose a category</option>
+            <option value="0">Biography</option>
+            <option value="1">Agriculture</option>
+            <option value="2">Crime</option>
+            <option value="4">Arts</option>
+            <option value="4">Energy</option>
+            <option value="5">Sports</option>
+            <option value="6">Science</option>
+            <option value="7">History</option>
+        </select>
+        <input type = submit value = 'search'>
+    </form>
     {% if posts %}
         {% for post in posts %}
             <p><a href={{ post.get_absolute_view_url }}>{{ post.title }}</a></p>
