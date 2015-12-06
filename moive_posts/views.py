@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-from django.core.mail import send_mail
+from django.contrib.auth.models import make_password
+from .models import EditorRequest
 from .models import Post
 from .models import Poster
 from .models import Comment
@@ -14,42 +15,70 @@ from .form import CommentForm
 from .form import PosterForm
 from .form import PostForm
 from .form import RateForm
+from .form import UserForm
 import datetime
 
 
 # Create your views here.
-
-
-# TODO
 def homepage(request):
-    posts = Post.objects.all().order_by('release_date')
+    posts = Post.objects.all().order_by('-rate')
     if len(posts) >= 10:
         posts = posts[:10]
     return render(request, 'homepage.html', {'posts': posts,
                                              'user': request.user})
 
 
-# TODO
 def register(request):
-    pass
+    if request.method == "POST":
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            user_name = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            password_confirm = user_form.cleaned_data['password_confirm']
+            if password_not_match(password, password_confirm):
+                return HttpResponseRedirect('/errors/pwdnotmatch/')
+            user_form.save()
+            user = User.objects.get(username=user_name)
+            user.password = make_password(user_form.cleaned_data['password'])
+            user.save()
+            return HttpResponseRedirect('/homepage/')
+    else:
+        user_form = UserForm()
+    return render(request, 'registration/register.html', {'user_form': user_form})
 
+
+def password_not_match(password, password_confirm):
+    return password_confirm != password
 
 @login_required(login_url='/accounts/login')
 def profile(request):
     post_list = Post.objects.filter(author=request.user)
     # template = loader.get_template('/registration')
+    editors = Group.objects.get(name="editor")
+    is_editor = request.user in editors.user_set.all()
     return render(request, 'registration/profile.html',
-                  {'user': request.user
-                      , 'post_list': post_list})
+                  {'user': request.user,
+                   'post_list': post_list,
+                   'is_editor': is_editor})
+
+
+@login_required(login_url='/accounts/login')
+def settings(request):
+    editors = Group.objects.get(name="editor")
+    is_editor = request.user in editors.user_set.all()
+    return render(request, 'registration/settings.html', {'user': request.user,
+                                                          'is_editor': is_editor})
 
 
 # need test
+@login_required(login_url='/accounts/login')
 def increase_privilege(request):
-    send_mail('request to be editor', 'username:' + request.user.username, request.user.email,
-              User.objects.get(is_superuser=True).email)
+    editor_request = EditorRequest(user=request.user)
+    editor_request.save()
     return HttpResponseRedirect('/success/editorrequest/')
 
 
+@login_required(login_url='/accounts/login')
 def decrease_privilege(request):
     group = Group.objects.get(name="editor")
     group.user_set.remove(request.user)
@@ -57,6 +86,7 @@ def decrease_privilege(request):
 
 
 def post(request, func, post_num="1"):
+
     post = Post.objects.get(id=post_num)
     comment_set = post.comment_set.all()
     posters = post.poster_set.all()
@@ -110,9 +140,9 @@ def create_post(request):
     """
     if request.method == 'POST':
         new_post = Post()
-
         new_post.author = request.user
         post_form = PostForm(request.POST, instance=new_post)
+        poster_form = PosterForm()
         if post_form.is_valid():
             # process data
             post_form.save()
@@ -195,6 +225,16 @@ def thanks(request, type, post_num):
     context = RequestContext(request, {
         'type': type,
         'post_num': post_num
+    })
+    return HttpResponse(template.render(context))
+
+
+def search_category(request):
+    cate = request.POST['cate']
+    post_list = Post.objects.filter(category=cate)
+    template = loader.get_template('search.html')
+    context = RequestContext(request, {
+        'post_list': post_list,
     })
     return HttpResponse(template.render(context))
 

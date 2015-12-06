@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from models import Post
 from models import Comment
 from models import Poster
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
 
 
@@ -53,3 +53,26 @@ class PosterForm(ModelForm):
 
 class RateForm(forms.Form):
     rate = forms.FloatField(required=True)
+
+
+class UserForm(ModelForm):
+    password_confirm = forms.CharField()
+    class Meta:
+        model = User
+        field = [
+            'username',
+            'password',
+            'email',
+            'first_name',
+            'last_name',
+            'password'
+        ]
+        exclude = [
+            'groups',
+            'user_permissions',
+            'is_staff',
+            'is_active',
+            'is_superuser',
+            'last_login',
+            'date_joined'
+        ]

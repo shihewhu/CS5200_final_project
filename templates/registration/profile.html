@@ -8,22 +8,20 @@
     <p>Hi! {{ user.last_name }}</p>
     <p>{{ user.username }}</p>
     <p>{{ user.email }}</p>
+    {% if is_editor %}
+        <a href="/create/" class="button">create a new post</a>
+    {% endif %}
+    <a href="/accounts/profile/settings/" class="button">settings</a>
     {% if post_list %}
         {% for post in post_list %}
             <a href={{ post.get_absolute_view_url }}>{{ post.title }}</a>
-            <button onclick="deleteComfirm()">delete</button>
-            <script>
-                function deleteConfirm() {
-                    r = confirm("delete");
-                    if (r == true) {
-                        $http.get("/delete/{{ post.id }}")
-                    }
-                }
-            </script>
+            {% if is_editor %}
+                <a href="/edit/{{ post.id }}/">Edit</a>
+                <a href="/delete/{{ post.id }}/" class="delete" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p> you don't have any post</p>
     {% endif %}
-    <a href="/accounts/logout_then_login/" class="button">logout</a>
 </body>
 </html>

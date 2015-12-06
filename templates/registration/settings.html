@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>settings</title>
+</head>
+<body>
+    <a href="/accounts/password_change/" class="button">change password</a>
+    <a href="/accounts/logout_then_login/" class="button">logout</a>
+    {% if not is_editor %}
+        <a href="/accounts/increase_privilege/" class="button">request to be editor</a>
+    {% else %}
+        <a href="/accounts/decrease_privilege/" class="button">give up to be a editor</a>
+    {% endif %}
+</body>
+</html>
