@@ -8,8 +8,12 @@
     <p>Sorry, {{ user.username }}:</p>
     {% if type == "notauthor" %}
         <p>you are not the author, you don't have permission</p>
+        <a href="/homepage/" clas="button">Back</a>
+    {% elif type == "pwdnotmatch" %}
+        <p>your confirm password is not match with your password</p>
+        <a href="/accounts/register/" class="button">Back</a>
     {% endif %}
-    <a href="/homepage/" clas="button">Back</a>
+
 
 </body>
 </html>

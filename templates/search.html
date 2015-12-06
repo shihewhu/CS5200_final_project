@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search result</title>
+</head>
+<body>
+<h1>Movie Site</h1>
+{% if post_list %}
+    <p>search result</p>
+        {% if post_list %}
+            {% for post in post_list %}
+                <p><a href={{ post.get_absolute_view_url }}>{{ post.title }}</a></p>
+            {% endfor %}
+        {% endif %}
+{% else %}
+    <p>no results</p>
+{% endif %}
+<p>
+    <a href = "/homepage/" class = "button">Home</a>
+</p>
+</body>
+</html>

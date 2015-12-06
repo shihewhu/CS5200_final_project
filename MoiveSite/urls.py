@@ -30,12 +30,20 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'registration/login.html',
                                                  'redirect_field_name': '/homepage/'}),
     url(r'^accounts/logout_then_login/$', auth_views.logout_then_login, {'login_url': '/accounts/login/'}),
+    url(r'^accounts/password_change/$', auth_views.password_change,
+        {'template_name': 'registration/password_change_form.html',
+         'post_change_redirect': '/success/pwdchange/'}),
+    url(r'^accounts/password_change_done/$', auth_views.password_change_done,
+        {'template_name': 'registration/password_change_done.html'}),
+    url(r'^accounts/register/$', views.register),
     url(r'^accounts/profile/$', views.profile),
+    url(r'^accounts/profile/settings/$', views.settings),
     url(r'^errors/(?P<type>[a-z]+)/$', views.errors),
     url(r'^accounts/increase_privilege/$', views.increase_privilege),
     url(r'^accounts/decrease_privilege/$', views.decrease_privilege),
     url(r'^success/(?P<type>[a-z]+)/$', views.success),
     url(r'^delete/(?P<post_num>[0-9]+)/$', views.delete_post),
-    url(r'^search/$', views.search_category, name='search_result')
+    url(r'^search/$', views.search_category, name='search_result'),
+    url(r'^', views.homepage)
 ]
 
