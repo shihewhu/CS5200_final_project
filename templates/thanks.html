@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>thanks</title>
+        <style>
+         a.button{
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size:20px;
+            border:3px outset lightblue;
+        }
+         a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:white;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+    </style>
 </head>
 <body>
     {% if type == "upload" %}
-        <P>thank you for your upload</P>
+        <h1>thank you for your upload</h1>
     {% elif type == "edit" %}
-        <p>thank you for your edit</p>
+        <h1>thank you for your edit</h1>
     {% elif type == "comment"%}
-        <p>thank you for your comment</p>
+        <h1>thank you for your comment</h1>
     {% else %}
-        <p>thank you for rating</p>
+        <h1>thank you for rating</h1>
     {% endif %}
     <a href="/post/view/{{ post_num }}/" class="button">Back</a>
 </body>

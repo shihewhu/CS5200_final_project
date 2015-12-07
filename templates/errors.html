@@ -3,17 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>oops</title>
+     <style>
+         a.button{
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size:20px;
+            border:3px outset lightblue;
+        }
+         a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:white;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+    </style>
 </head>
 <body>
-    <p>Sorry, {{ user.username }}:</p>
+    <h1>Sorry, {{ user.username }}:</h1>
     {% if type == "notauthor" %}
-        <p>you are not the author, you don't have permission</p>
-        <a href="/homepage/" clas="button">Back</a>
+        <h1>you are not the author, you don't have permission</h1>
+        <a href="/homepage/" class="button">Back</a>
     {% elif type == "pwdnotmatch" %}
-        <p>your confirm password is not match with your password</p>
+        <h1>your confirm password is not match with your password</h1>
         <a href="/accounts/register/" class="button">Back</a>
     {% endif %}
-
 
 </body>
 </html>

@@ -3,32 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ user.last_name }} welcome!</title>
+    <style>
+        h1{
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size: 40px;
+            color: navajowhite;
+            background: url("/templates/home-bg.jpg");
+            width: auto;
+            top:0px;;
+        }
+        a.button{
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size:15px;
+            border:3px outset lightblue;
+        }
+        div.user-info{
+            outline:red groove;
+            border:2px solid #8ea9a2;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size: 20px;
+            background:lightcyan;
+            width:60%;
+            padding:10px;
+            margin:auto;
+        }
+        a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:white;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+        div.post-container{
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size: medium;
+            width:60%;
+            margin: auto;
+            padding:10px;
+        }
+    </style>
 </head>
 <body>
+<h1> Documentory Moive Site:profile</h1>
+<div class="user-info">
     <p>Hi! {{ user.last_name }}</p>
-    <p>{{ user.username }}</p>
-    <p>{{ user.email }}</p>
-    <p>
-        <a href="/accounts/profile/settings/" class="button">settings</a>
-    </p>
+    <p>Username:{{ user.username }}</p>
+    <p>Email:{{ user.email }}</p>
+    <a href="/accounts/profile/settings/" class="button">settings</a>
     {% if is_editor %}
-        <p>
             <a href="/create/start/" class="button">create a new post</a>
-        </p>
     {% endif %}
+</div>
+<div class="post-container">
     {% if post_list %}
         {% for post in post_list %}
             <p>
             <a href={{ post.get_absolute_view_url }}>{{ post.title }}</a>
             {% if is_editor %}
-                <a href="/edit/{{ post.id }}/">Edit</a>
-                <a href="/delete/{{ post.id }}/" class="delete" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                <a href="/edit/{{ post.id }}/" class="button">Edit</a>
+                <a href="/delete/{{ post.id }}/" class="button" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
             {% endif %}
             </p>
         {% endfor %}
     {% else %}
         <p> you don't have any post</p>
     {% endif %}
-    <a href="/homepage/">Home</a>
+<br>
+    <a href="/homepage/" class="button">Home</a>
+</div>
 </body>
 </html>

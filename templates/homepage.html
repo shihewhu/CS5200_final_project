@@ -2,17 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>welcome to moive site</title>
+    <title>welcome to documentory moive site</title>
+    <style>
+        div.container{
+            background: url("home-bg.jpg");
+            width: auto;
+            height: 300px;
+            top:0px;
+        }
+div.site-header{
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size: 40px;
+    color: navajowhite;
+}
+div.user-control{
+    display: inline-block;
+    position: absolute;
+    left:20px;
+}
+a.button{
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size:20px;
+    color:navajowhite;
+    text-decoration: none;
+    border:3px outset lightblue;
+}
+        a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:brown;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+div.search-bar{
+    display:inline-block;
+    font-family: 'Lora', 'Arial', serif;
+    font-size: 20px;
+    position:absolute;
+    right:10px;
+    color:navajowhite;
+    width:395px;
+}
+div.post-container{
+    font-family: 'Lora', 'Times New Roman', serif;
+    font-size: 15px;
+}
+    </style>
 </head>
 <body>
-    <h1> Moive Site</h1>
-    {% if user.is_authenticated %}
+<div class="container">
+    <div class="site-header">
+         <h1> Documentory Moive Site</h1>
+    </div>
+     <div class="user-control">
+        {% if user.is_authenticated %}
         <a href="/accounts/profile/" class="button">profile</a>
     {% else %}
         <a href="/accounts/register/" class="button">Sign up</a>
         <a href="/accounts/login/" class="button">login</a>
     {% endif %}
-    <form action = "{% url 'search_result' %}" method = 'post'>
+    </div>
+    <div class="search-bar">
+         <form action = "{% url 'search_result' %}" method = 'post'>
         {% csrf_token %}
         Search by Category:
         <select name = 'cate'>
@@ -26,13 +79,16 @@
             <option value="7">Science</option>
             <option value="8">History</option>
         </select>
-        <input type = submit value = 'search'>
+        <input class="button" type = submit value = 'search'>
     </form>
-
-    {% if posts %}
+    </div>
+</div>
+<div class="post-container">
+        {% if posts %}
         {% for post in posts %}
             <p><a href={{ post.get_absolute_view_url }}>{{ post.title }}</a></p>
         {% endfor %}
     {% endif %}
+</div>
 </body>
 </html>

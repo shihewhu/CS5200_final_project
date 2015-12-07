@@ -4,20 +4,55 @@
     <meta charset="UTF-8">
     <title>search result</title>
 </head>
+<style>
+    div.site-header{
+        background: url("home-bg.jpg");
+        width: auto;
+        height: 120px;
+        top:0px;;
+    }
+    h1{
+        font-family: 'Lora', 'Times New Roman', serif;
+        font-size: 40px;
+        color: navajowhite;
+    }
+    a{
+        font-family: 'Lora', 'Times New Roman', serif;
+        font-size: 15px;
+    }
+    a.button{
+        font-family: 'Lora', 'Times New Roman', serif;
+        font-size:20px;
+        color:navajowhite;
+        text-decoration: none;
+        border:3px outset lightblue;
+    }
+    a.button:hover{
+        text-decoration: none;
+        background-color: #c08779;
+        color:brown;
+    }
+    a.button:active{
+        text-decoration: none;
+        border:3px inset lightblue;
+    }
+</style>
 <body>
-<h1>Movie Site</h1>
+<div class="site-header">
+    <h1>Documentary Movie Site</h1>
+    <a href = "/homepage/" class = "button">Home</a>
+</div>
+
 {% if post_list %}
     <p>search result</p>
         {% if post_list %}
             {% for post in post_list %}
-                <p><a href={{ post.get_absolute_view_url }}>{{ post.title }}</a></p>
+                <br>
+                <a class="posts" href={{ post.get_absolute_view_url }}>{{ post.title }}</a>
             {% endfor %}
         {% endif %}
 {% else %}
     <p>no results</p>
 {% endif %}
-<p>
-    <a href = "/homepage/" class = "button">Home</a>
-</p>
 </body>
 </html>

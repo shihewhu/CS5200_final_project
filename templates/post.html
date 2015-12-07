@@ -3,35 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ post.title }}</title>
+    <style>
+        div.site-head{
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size: 40px;
+            color: navajowhite;
+            background: url("home-bg.jpg");
+            width: auto;
+            height: 300px;
+            top:0px;
+        }
+        div.container{
+            inline
+        }
+        div.post-body{
+            font-family: 'Lora', 'Arial', serif;
+            font-size:15px;
+            margin:auto;
+            width:50%;
+            padding:10px;
+            border:3px hidden lightcyan;
+        }
+        div.comment{
+            border:2px solid lawngreen;
+            background: lightgreen;
+            font-family: 'Lora', 'Arial', serif;
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1> {{ post.title }}</h1>
-    <p> rate: {{ post.rate }}/5.0</p>
-    <form action="/post/rate/{{ post_num }}/" method="post">
-        {% csrf_token %}
-        {{ rate_form.as_table }}
-        <input type="submit" value="Submit"/>
-    </form>
-    <p> region: {{ post.release_region }}</p>
-    <p> release date: {{ post.release_date }}</p>
-    <p> director: {{ post.director_name }}</p>
-    <p> cast: {{ post.cast }}</p>
-    <p> category: {{ post.get_category }}</p>
-    <p> production company: {{ post.production_company }}</p>
-    <p> authored by : {{ post.author.username }}</p>
-    <p> {{ post.description }}</p>
+    <div class="site-head">
+        <h1>Documentory Movie Site</h1>
+    </div>
+<div class="container">
+    <div class="post-body">
+        <h2> {{ post.title }}</h2>
+        <p> rate: {{ post.rate }}/5.0</p>
+        <form action="/post/rate/{{ post_num }}/" method="post">
+            {% csrf_token %}
+            {{ rate_form.as_table }}
+            <input type="submit" value="Submit"/>
+        </form>
+        <p> region: {{ post.release_region }}</p>
+        <p> release date: {{ post.release_date }}</p>
+        <p> director: {{ post.director_name }}</p>
+        <p> cast: {{ post.cast }}</p>
+        <p> category: {{ post.get_category }}</p>
+        <p> production company: {{ post.production_company }}</p>
+        <p> authored by : {{ post.author.username }}</p>
+        <p> {{ post.description }}</p>
+    </div>
     {% if posters %}
         {% for poster in posters %}
             {% load staticfiles %}
             <img src="/static/{{ poster.image.url }}" style="width:304px;height:228px;">
         {% endfor %}
     {% endif %}
-    <p> comment: </p>
+</div>
+    <h3> comment: </h3>
     {% if comments %}
         {% for comment in comments %}
-            <p> commented on : {{ comment.date_posted }}</p>
-            <p> commented by : {{ comment.commented_by }}</p>
-            <p> {{ comment.comment_content }} </p>
+            <div class="comment">
+                <p> commented on : {{ comment.date_posted }}</p>
+                <p> commented by : {{ comment.commented_by }}</p>
+                <p> {{ comment.comment_content }} </p>
+            </div>
         {% endfor %}
     {% else %}
             <p>no comment yet.</p>

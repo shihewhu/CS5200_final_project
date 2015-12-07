@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>success!</title>
+    <style>
+         a.button{
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size:20px;
+            border:3px outset lightblue;
+        }
+         a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:white;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+    </style>
 </head>
 <body>
     {% if type == "editorrequest" %}
-        <p>your editor request has been successfully submitted</p>
+        <h1>your editor request has been successfully submitted</h1>
     {% elif type == "canceleditor" %}
-        <p>your are a general user now</p>
+        <h1>your are a general user now</h1>
     {% elif type == "delete" %}
-        <p>delete successfully.</p>
+        <h1>delete successfully.</h1>
     {% elif type == "pwdchange" %}
-        <p>password has been changed</p>
+        <h1>password has been changed</h1>
     {% endif %}
-    <a href="/accounts/profile/" clas="button">Back</a>
+    <a href="/accounts/profile/" class="button">Back</a>
 </body>
 </html>

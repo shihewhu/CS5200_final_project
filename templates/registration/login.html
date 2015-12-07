@@ -3,8 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <style>
+         h1{
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size: 40px;
+            color: navajowhite;
+            background: url("/templates/home-bg.jpg");
+            width: auto;
+            top:0px;;
+        }
+        table{
+            font-family: Calibri;
+        }
+        div.login-frame{
+            border:4px navajowhite groove;
+            margin:auto;
+            width: 40%;
+            padding:40px;
+        }
+        a.button{
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Lora', 'Times New Roman', serif;
+            font-size:20px;
+            color:orangered;
+            border:3px outset lightblue;
+        }
+                a.button:hover{
+            text-decoration: none;
+            background-color: #c08779;
+            color:white;
+        }
+        a.button:active{
+            text-decoration: none;
+             border:3px inset lightblue;
+        }
+    </style>
 </head>
 <body>
+    <h1>Documentory Moive Site:login</h1>
+    <a href="/homepage/" class="button">Home</a>
+    <div class="login-frame">
     {% if form.errors %}
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -25,7 +64,7 @@
         <input type="submit" value="login" />
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
-    <a href="/homepage/" class="button">Home</a>
+    </div>
 
 </body>
 </html>
