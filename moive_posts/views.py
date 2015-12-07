@@ -151,7 +151,7 @@ def create_post(request, func):
                 poster_form = PosterForm(request.POST, request.FILES, instance=new_poster, prefix="poster_form"+str(i))
                 if poster_form.is_valid():
                     poster_form.save()
-            return HttpResponseRedirect('/thanks/upload/' + str(post_num))
+            return HttpResponseRedirect('/thanks/upload/' + str(post_num)+'/')
     else:
         if func == "start":
             del poster_forms[:]
