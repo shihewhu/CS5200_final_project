@@ -18,7 +18,7 @@ from .form import RateForm
 from .form import UserForm
 import datetime
 
-
+poster_forms = []
 # Create your views here.
 def homepage(request):
     posts = Post.objects.all().order_by('-rate')
@@ -86,7 +86,6 @@ def decrease_privilege(request):
 
 
 def post(request, func, post_num="1"):
-
     post = Post.objects.get(id=post_num)
     comment_set = post.comment_set.all()
     posters = post.poster_set.all()
@@ -132,7 +131,7 @@ def process_rate_post(request, rate_form, post_num):
 
 @permission_required('moive_posts.add_post', raise_exception=True)
 @login_required(login_url='/accounts/login')
-def create_post(request):
+def create_post(request, func):
     """
     view for creating a post and poster and save them into the database
     :param request: the request made by user
@@ -141,25 +140,33 @@ def create_post(request):
     if request.method == 'POST':
         new_post = Post()
         new_post.author = request.user
-        post_form = PostForm(request.POST, instance=new_post)
-        poster_form = PosterForm()
+        post_form = PostForm(request.POST, instance=new_post, prefix="post_form")
         if post_form.is_valid():
             # process data
             post_form.save()
             post_num = new_post.id
-            new_poster = Poster()
-            new_poster.post = new_post
-            poster_form = PosterForm(request.POST, request.FILES, instance=new_poster)
-            if poster_form.is_valid():
-                poster_form.save()
-                return HttpResponseRedirect('/thanks/upload/' + str(post_num))
+            for i in range(len(poster_forms)):
+                new_poster = Poster()
+                new_poster.post = new_post
+                poster_form = PosterForm(request.POST, request.FILES, instance=new_poster, prefix="poster_form"+str(i))
+                if poster_form.is_valid():
+                    poster_form.save()
+            return HttpResponseRedirect('/thanks/upload/' + str(post_num))
     else:
-        post_form = PostForm()
-        poster_form = PosterForm()
+        if func == "start":
+            del poster_forms[:]
+        #     poster_form = PosterForm(prefix="post_form"+str(len(poster_forms)))
+        #     poster_forms.append(poster_form)
+        # else:
+        post_form = PostForm(prefix="post_form")
+        poster_form = PosterForm(prefix="poster_form"+str(len(poster_forms)))
+        poster_forms.append(poster_form)
+
+    print poster_forms
     template = loader.get_template('create_post.html')
     context = RequestContext(request, {
         'post_form': post_form,
-        'poster_form': poster_form
+        'poster_forms': poster_forms
     })
     return HttpResponse(template.render(context))
 
@@ -199,7 +206,8 @@ def edit_post(request, post_num="1"):
     return HttpResponse(template.render(context))
 
 
-# TODO
+@permission_required('moive_posts.delete_post', raise_exception=True)
+@login_required(login_url='/accounts/login')
 def delete_post(request, post_num="1"):
     """
     view for delete post action

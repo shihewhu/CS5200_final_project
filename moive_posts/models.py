@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from datetime import datetime
+from django.utils.timezone import now
 # Create your models here.
 categroy_map = {
         '1': 'biography',
@@ -30,7 +30,7 @@ class Post(models.Model):
     )
     category = models.CharField(max_length=1, choices=CATEGORY_CHOICES)
     description = models.CharField(max_length=4000)
-    rate = models.FloatField(null=True, blank=True, default=0.0)
+    rate = models.FloatField(null=True, blank=True)
     rate_num = models.IntegerField(default=0)
     production_company = models.CharField(max_length=200)
     release_region = models.CharField(max_length=200)
@@ -41,7 +41,7 @@ class Post(models.Model):
     def add_rate(self, rate_added):
         if self.rate_num == 0:
             self.rate = rate_added
-            self.rate = 1
+            self.rate_num = 1
         else:
             self.rate = (self.rate * self.rate_num + rate_added) / (self.rate_num + 1)
             self.rate_num += 1
@@ -65,13 +65,13 @@ class Post(models.Model):
 
 class Poster(models.Model):
     image = models.ImageField(upload_to="static/")
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):
     comment_content = models.CharField(max_length=4000)
     date_posted = models.DateField()
-    comment_to = models.ForeignKey(Post)
+    comment_to = models.ForeignKey(Post, on_delete=models.CASCADE)
     commented_by = models.ForeignKey(User)
 
     def __str__(self):
@@ -82,5 +82,5 @@ class EditorRequest(models.Model):
     """
     model for editor request
     """
-    user = models.ForeignKey(User)
-    request_date = models.DateField(default=datetime.now())
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    request_date = models.DateField(default=now)

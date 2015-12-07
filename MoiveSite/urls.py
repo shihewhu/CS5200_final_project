@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^post/(?P<func>[a-z]+)/(?P<post_num>[0-9]+)/$', views.post, name='post-func'),
     url(r'^thanks/(?P<type>[a-z]+)/(?P<post_num>[0-9]+)/$', views.thanks),
-    url(r'^create/$', views.create_post),
+    url(r'^create/(?P<func>[a-z]+)/$', views.create_post),
     url(r'^edit/(?P<post_num>[0-9]+)/$', views.edit_post),
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'registration/login.html',
                                                  'redirect_field_name': '/homepage/'}),

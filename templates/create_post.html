@@ -5,11 +5,14 @@
     <title>create post</title>
 </head>
 <body>
-    <form enctype="multipart/form-data" action="/create/" method="post">
+    <form enctype="multipart/form-data" action="/create/post/" method="post">
         {% csrf_token %}
         {{ post_form.as_p }}
-        {{ poster_form.as_p }}
+        {% for poster_form in poster_forms %}
+            {{ poster_form.as_p }}
+        {% endfor %}
         <input type="submit" value="Submit" />
     </form>
+    <a href="/create/addposter/" class="button">Add poster</a>s
 </body>
 </html>
