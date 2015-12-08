@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import make_password
+from django.core.mail import EmailMessage
 from .models import EditorRequest
 from .models import Post
 from .models import Poster
@@ -82,6 +83,10 @@ def increase_privilege(request):
 def decrease_privilege(request):
     group = Group.objects.get(name="editor")
     group.user_set.remove(request.user)
+    email = EmailMessage('result about your request to cancel your editor privilege',
+                         'You canceling request is successful',
+                         to=[request.user.email])
+    email.send()
     return HttpResponseRedirect('/success/canceleditor/')
 
 
