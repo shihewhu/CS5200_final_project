@@ -12,9 +12,10 @@
             width: auto;
             height: 300px;
             top:0px;
+            text-align: center;
         }
         div.container{
-            inline
+            inline;
         }
         div.post-body{
             font-family: 'Lora', 'Arial', serif;
@@ -22,13 +23,19 @@
             margin:auto;
             width:50%;
             padding:10px;
-            border:3px hidden lightcyan;
+            border:3px hidden cyan;
+            background: lightgoldenrodyellow;
+
         }
         div.comment{
-            border:2px solid lawngreen;
+            border:2px hidden lawngreen;
             background: lightgreen;
             font-family: 'Lora', 'Arial', serif;
-            font-size: 15px;
+            font-size:15px;
+            margin:auto;
+            width:50%;
+            padding:10px;
+
         }
     </style>
 </head>
@@ -54,13 +61,17 @@
         <p> authored by : {{ post.author.username }}</p>
         <p> {{ post.description }}</p>
     </div>
+    <div class="post-body">
     {% if posters %}
         {% for poster in posters %}
             {% load staticfiles %}
             <img src="/static/{{ poster.image.url }}" style="width:304px;height:228px;">
         {% endfor %}
     {% endif %}
+    </div>
 </div>
+<div class="container">
+<div class="comment">
     <h3> comment: </h3>
     {% if comments %}
         {% for comment in comments %}
@@ -78,5 +89,7 @@
         {{ comment_form.as_table }}
         <input type="submit" value="Submit" />
     </form>
+</div>
+</div>
 </body>
 </html>
