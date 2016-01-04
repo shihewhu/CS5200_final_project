@@ -1,27 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
-from django.contrib.auth.models import make_password
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import User, Group, make_password
 from django.core.mail import EmailMessage
-from .models import EditorRequest
-from .models import Post
-from .models import Poster
-from .models import Comment
-from .form import CommentForm
-from .form import PosterForm
-from .form import PostForm
-from .form import RateForm
-from .form import UserForm
+from .models import (EditorRequest, Post, Poster, Comment)
+from .form import (CommentForm, PosterForm, PostForm, RateForm, UserForm)
 import datetime
 
 poster_forms = []
 # Create your views here.
+
+
 def homepage(request):
+    """
+    view for homepage
+    :param request:
+    :return:
+    """
     posts = Post.objects.all().order_by('-rate')
     if len(posts) >= 10:
         posts = posts[:10]
@@ -30,6 +26,11 @@ def homepage(request):
 
 
 def register(request):
+    """
+    view for reqister
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         user_form = UserForm(request.POST)
         if user_form.is_valid():
@@ -67,6 +68,7 @@ def profile(request):
 def settings(request):
     editors = Group.objects.get(name="editor")
     is_editor = request.user in editors.user_set.all()
+
     return render(request, 'registration/settings.html', {'user': request.user,
                                                           'is_editor': is_editor})
 
@@ -81,6 +83,11 @@ def increase_privilege(request):
 
 @login_required(login_url='/accounts/login')
 def decrease_privilege(request):
+    """
+    View for decrease privilege
+    :param request: the request received
+    :return: http response
+    """
     group = Group.objects.get(name="editor")
     group.user_set.remove(request.user)
     email = EmailMessage('result about your request to cancel your editor privilege',
@@ -254,10 +261,10 @@ def search_category(request):
 
 def errors(request, type):
     """
-
-    :param request:
-    :param type:
-    :return:
+    The views for errors
+    :param request: the request recieved
+    :param type: error type
+    :return: http response for error page
     """
     return render(request, "errors.html", {'type': type,
                                            'user': request.user})
@@ -265,9 +272,9 @@ def errors(request, type):
 
 def success(request, type):
     """
-
-    :param request:
-    :param type:
-    :return:
+    View for success page
+    :param request: the request received
+    :param type: success type
+    :return: http reponse for success page
     """
     return render(request, 'success.html', {'type': type})
